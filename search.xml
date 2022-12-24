@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>vue3</title>
+      <link href="/2022/12/24/vue3/"/>
+      <url>/2022/12/24/vue3/</url>
+      
+        <content type="html"><![CDATA[<p>1.安装和使用 Vue 这个 JavaScript 库的方式<br>方式一:在页面中通过 CDN 的方式来引入;<br>CDN：内容分发网络(Content Delivery Network 或 Content Distribution Network，缩写:CDN)</p><script src="https://unpkg.com/vue@next"></script><p>方式二:下载 Vue 的 JavaScript 文件，并且自己手动引入;<br>方式三:通过 npm 包管理工具安装使用它(webpack 再讲);<br>方式四:直接通过 Vue CLI 创建项目，并且使用它;</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue3 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CSS知识点拾遗</title>
       <link href="/2022/12/23/first/"/>
       <url>/2022/12/23/first/</url>
