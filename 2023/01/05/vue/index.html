@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Vue.js basics(part1) Date&amp;Templatestemplate 会覆盖之前对应标签里的内容使其失效data(){return{} &#x2F;&#x2F; 别忘了里面要有 return，里面定义对象时用： }  click eventsv-click(简写@)  conditional renderingv-if v-else(通过 dom 表达，适用于频繁的使用)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3学习笔记（ninja)">
+<meta property="og:url" content="http://example.com/2023/01/05/vue/index.html">
+<meta property="og:site_name" content="Lizzy的个人博客">
+<meta property="og:description" content="Vue.js basics(part1) Date&amp;Templatestemplate 会覆盖之前对应标签里的内容使其失效data(){return{} &#x2F;&#x2F; 别忘了里面要有 return，里面定义对象时用： }  click eventsv-click(简写@)  conditional renderingv-if v-else(通过 dom 表达，适用于频繁的使用)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/01/05/vue/lifecycle.png">
+<meta property="og:image" content="http://example.com/2023/01/05/vue/async.png">
+<meta property="article:published_time" content="2023-01-05T15:19:40.000Z">
+<meta property="article:modified_time" content="2023-02-19T10:43:52.407Z">
+<meta property="article:author" content="Lizzy">
+<meta property="article:tag" content="vue3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/01/05/vue/lifecycle.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/clouds.png">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/clouds.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/clouds.png">
+        
+      
+    
+    <!-- title -->
+    <title>Vue3学习笔记（ninja)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/likeclouds">项目</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/12/24/vue3/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/05/vue/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/05/vue/&text=Vue3学习笔记（ninja)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/05/vue/&is_video=false&description=Vue3学习笔记（ninja)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Vue3学习笔记（ninja)&body=Check out this article: http://example.com/2023/01/05/vue/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/05/vue/&name=Vue3学习笔记（ninja)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/05/vue/&t=Vue3学习笔记（ninja)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-js-basics-part1"><span class="toc-number">1.</span> <span class="toc-text">Vue.js basics(part1)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-js-basics-part2"><span class="toc-number">2.</span> <span class="toc-text">Vue.js basics(part2)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-CLI-and-bigger-projects"><span class="toc-number">3.</span> <span class="toc-text">Vue CLI and bigger projects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#buid-a-reaction-timer-game"><span class="toc-number">4.</span> <span class="toc-text">buid a reaction timer game</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forms-amp-inputs"><span class="toc-number">5.</span> <span class="toc-text">forms&amp;inputs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#the-vue-router"><span class="toc-number">6.</span> <span class="toc-text">the vue router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fetching-data"><span class="toc-number">7.</span> <span class="toc-text">fetching data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#the-composition"><span class="toc-number">8.</span> <span class="toc-text">the composition</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Vue3学习笔记（ninja)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lizzy</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-05T15:19:40.000Z" itemprop="datePublished">2023-01-05</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/vue3/" rel="tag">vue3</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="Vue-js-basics-part1"><a href="#Vue-js-basics-part1" class="headerlink" title="Vue.js basics(part1)"></a>Vue.js basics(part1)</h3><ol>
+<li><p>Date&amp;Templates<br>template 会覆盖之前对应标签里的内容使其失效<br>data(){<br>return{} &#x2F;&#x2F; 别忘了里面要有 return，里面定义对象时用：</p>
+<p>}</p>
+</li>
+<li><p>click events<br>v-click(简写@)</p>
+</li>
+<li><p>conditional rendering<br>v-if v-else(通过 dom 表达，适用于频繁的使用)<br>v-show(用 css 表达，节约内存，适用于不频繁的使用如登陆界面)</p>
+</li>
+</ol>
+<h3 id="Vue-js-basics-part2"><a href="#Vue-js-basics-part2" class="headerlink" title="Vue.js basics(part2)"></a>Vue.js basics(part2)</h3><ol start="4">
+<li>@mouseover,@mouseleave,@dblclick,@mousemove<br>当创建如 handleEvent(){}方法时,若()中不传入自定义参数，则唯一的参数 e 默认为事件参数，可以输出 e.type 展示为事件类型；若有自定义参数，则 e.type（变成 undefined）不能展示出事件对象，此时若希望事件对象被传递：在调用时用参数$event<br>（VUe.js 中说，允许向方法传入自定义参数以代替原生事件；若需要在内联事件处理器中访问原生 DOM 事件，可以向该处理器方法传入一个特殊的 $event 变量）<br>e.offsetX,e.offsetY：框中的光标位置 offset 指光标相对于左上角的偏移量</li>
+<li>outputting lists<br>v-for:遍历数据数组 &lt;ul&gt;&lt;li v-for&#x3D;”xxx in array”&gt;&lt;&#x2F;li&gt;&lt;&#x2F;ul&gt;,使用时调用某属性时可以用 xxx.jpg 等<br>用 v-for 时需要绑定 key，使每个元素的 key 都是独一无二的</li>
+<li>attibute binding<br>v-bind(:)：用于动态绑定属性，如&lt;a v-bind:href&#x3D;”xxx”&gt;，还可以用于 img src</li>
+<li>dynamic classes :class&#x3D;”{fav:book.isFav}”</li>
+<li>toggling favs<br>使当前属性变化，在调用方法时在()里面放要操作的参数，且将此参数传递到组件中</li>
+<li>computed properties<br>定义依赖于其他数据属性的数据，当其他数据更新时，computed 里的数据也会更新<br>如：computed{filter(){return this.xxx.filter((xx)&#x3D;&gt;xx.)}}<br>（xxx 为数组名，xx 为里面的数值名）</li>
+</ol>
+<p>&lt;script src&#x3D;”<a target="_blank" rel="noopener" href="https://unpkg.com/vue@3.0.2%22%3E">https://unpkg.com/vue@3.0.2&quot;&gt;</a></p>
+<h3 id="Vue-CLI-and-bigger-projects"><a href="#Vue-CLI-and-bigger-projects" class="headerlink" title="Vue CLI and bigger projects"></a>Vue CLI and bigger projects</h3><ol>
+<li><p>创建项目：vue create… （如 modal-project<br>在网址中查看：在终端运行 npm run serve</p>
+</li>
+<li><p>template refs<br>给标签一个 ref 值 ref&#x3D;”xxx”，在 methods 中引用时：<br>this.$refs.name.classList.add(“active”);<br>   this.$refs.name.focus();</p>
+</li>
+<li><p>data 是个函数返回定义的对象<br>methods 是个属性，里面包含各种各样的函数</p>
+</li>
+<li><p>App.vue 是 root component<br>parent component,child component<br>component tree</p>
+</li>
+<li><p>引用组件：<br>在 script 中 import xxx from xxx<br>在 export default{}中创建 components:{xxx}<br>在&lt;template&gt; 中引用&lt;xxx&#x2F;&gt;</p>
+</li>
+<li><p>解决 components 中某组件样式覆盖其他组件样式：</p>
+<ul>
+<li>&lt;style scoped&gt;,则样式只用于当前组件</li>
+<li>把给 style 赋值的属性写得更具体，如在标签名前面加类名</li>
+<li>全局样式：在 assets 中添加 css 文件，在 main.js 中使用 imort”…”把文件引入</li>
+</ul>
+</li>
+<li><p>通过 prop 把父组件里的数据传入子数据：<br>在 template 的标签属性里放入&lt;xxx header&#x3D;”header” text&#x3D;”text”&gt;等数据，数据可以在 data 中定义然后通过:(v-bind)绑定。在子组件中用&lt;script&gt;的 export default{}引用 props:[“header”]，最后在子组件 template 里引用<br>还可以在这个标签里加入 theme 属性，在子组件通过绑定类名的判断式子来控制子组件要默认&#x2F;指定样式</p>
+</li>
+<li><p>避免某组件样式覆盖其他组件样式：</p>
+<ul>
+<li>&lt;style scoped&gt;,则样式只用于当前组件</li>
+<li>把给 style 赋值的属性写得更具体，如在标签名前面加类名</li>
+<li>全局样式：在 assets 中添加 css 文件，在 main.js 中使用 imort”…”把文件引入</li>
+</ul>
+</li>
+<li><p>emitting custom events 自定义事件（从子组件触发，让父组件收到）：<br>定义的时候：this.$emit(“随机取的变量名”,要传入的data数值等(this.xxx,此数值名要传入自定义方法名的()里作为参数)<br>引用的时候：@变量名&#x3D;”定义的方法名”，()里写上data数值名<br>在子组件中 methods 里定义事件，事件名照常使用，{}中用 this.$emit(“xxx”)从而让父组件给 xxx 赋具体值：父组件用 props 传给子组件的标签里加上&lt;@xxx&#x3D;”某父组件中方法”&gt;</p>
+</li>
+<li><p>click event modifiers 事件修饰符<br>在@click 右边加.right:只有点击鼠标右键时起作用。<br>.shift：得同时按下 shift 键,有此功能的还有.ctrl，.alt，.meta<br>@click.self:只有点该元素时奏效， 点该元素里的子元素也不行</p>
+</li>
+<li><p>slots 插槽<br>传递 templates 这种可重复用的组件，不传递简单数据(string&#x2F;boolean&#x2F;array)<br>用法：root 页面中不用自闭合组件标签，而把它打开：&lt;xxx&gt;传递内容&lt;&#x2F;xxx&gt;。再在被传递组件中插入&lt;slot&gt;&lt;&#x2F;slot&gt;，这里面的是默认 slot 的默认内容</p>
+<ul>
+<li>具名插槽：<br>在 root 中 slot 模版中的任意位置插入一个模版如&lt;template&gt;,再&lt;template&gt;中给模版命名如 v-slot:links,插入内容后在对应组件中需要插入具名插槽的标签对里插入&lt;slot name&#x3D;””&gt;&lt;&#x2F;slot&gt;。</li>
+<li>默认模版：可以在要传入的组件中&lt;slot&gt;&lt;&#x2F;slot&gt;中间插入某些值，当没有要传入的默认数据时就会显示出来。</li>
+</ul>
+</li>
+<li><p>creating another modal<br>组件用很强的可复用性 reusable，复用过程中只需要改变 root 中的传递内容，不需要改组件文件里的东西（modal.vue</p>
+</li>
+<li><p>using teleport 传送门<br>在 index.html 中新建一个 div，给其一个 class 或者 ID，<br>再使 vue 文件中的某些方法单独与此 div 绑定：将 app.vue 中对应的标签名改成&lt;teleport to&#x3D;””(.xxx&#x2F;#xxx)&gt;等。<br>再将全局 css（root 文件中的 style）里#app 对应的样式前加上.xxx&#x2F;#xxx 使其可以与全局样式绑定</p>
+</li>
+</ol>
+<h3 id="buid-a-reaction-timer-game"><a href="#buid-a-reaction-timer-game" class="headerlink" title="buid a reaction timer game"></a>buid a reaction timer game</h3><ul>
+<li><p>lifecycle hooks<br>在组件运行的不同阶段可以使用不同的 hooks</p>
+<img src="/2023/01/05/vue/lifecycle.png">
+mounted(){}:在渲染函数时调用（触发某组件时调用），updated(){}:在函数更新/重新渲染和调用时作用，unmounted(){}:在函数最终全部取出完全不作用时调用（如离开某组件时触发）
+</li>
+<li><p>设置某条件是否显示&#x2F;使用： disabled&#x3D;”true”时不可用，&#x3D;false 时可用</p>
+</li>
+<li><p>setTimeout(要执行的代码, 等待的毫秒数)</p>
+</li>
+<li><p>setInterval(()&#x3D;&gt;{}, milliseconds, param1, param2, …)每隔一段时间不停调用函数，单位:ms</p>
+</li>
+<li><p>clearInterval() ：取消由 setInterval() 函数设定的定时执行操作，它的参数必须是由 setInterval() 返回的 ID 值。</p>
+</li>
+<li><p>creating a timer<br>custom events with data<br>showing a result custome</p>
+<ul>
+<li>可以用 css 自行调节 button 样式，</li>
+<li>设置不能点击的 button 样式时用：button[disabled]{}</li>
+<li>opacity：设置不透明度；cursor：not allowed 使鼠标样式展示为不能点击</li>
+</ul>
+</li>
+</ul>
+<h3 id="forms-amp-inputs"><a href="#forms-amp-inputs" class="headerlink" title="forms&amp;inputs"></a>forms&amp;inputs</h3><ol>
+<li><p>v-model:将 data 与表单 form 里的值绑定（input,select，checkboxes…)<br>双向数据绑定：</p>
+<ul>
+<li>从输入到组件数据的数据绑定：当数据在表单中随着输入更新，它绑定到组建的 data 也更新，</li>
+<li>从 data 到 template：当更新 data 中的值或者用 method 等方法更新组件中数据时，输入字段中的内容也会随之更新</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>对于 select 来讲，指定默认值可以使 v-model 绑定的数据与 value 相等</li>
+<li>对于 checkbox 复选框来讲，如果只有一个框，指定 v-model 的默认值是 boolean。如果是有相同 v-model 的多个输入框，要给每个 input 设置一个 value 来标记，指定的默认值是一个数组，当哪个框是 checked 时其对应的 value 也进入数组</li>
+</ul>
+<ol start="2">
+<li>可以单独设置某个类别的 input 元素样式，如：input[type&#x3D;’checkbox’]{}</li>
+<li>keyboard events<br>v-for 里面必须为每个元素添加一个独一无二的 key，<br>[].includes(‘x’)：判断某数组中是否包含某元素并返回 true&#x2F;false<br>str.includes(“xxx”):查找字符串是不是包含某字符<br>当用 keyup.alt 来获取事件时，与 alt 键一同按下的键可以被读取但不会再显示在 input 中</li>
+<li>.prevent:阻止默认的行为（如加载页面）用法如：@submit.prevent。可以代替 event.preventDefault()</li>
+<li>(x)&#x3D;&gt;{return xxx }可以写成(x) &#x3D;&gt; xxx</li>
+<li>form 表单中 button 标签默认的类型是 submit，即默认的 button 点击就会触发表单的提交事件，触发页面的自动刷新。</li>
+</ol>
+<h3 id="the-vue-router"><a href="#the-vue-router" class="headerlink" title="the vue router"></a>the vue router</h3><p>前端路由是指 Hash 地址与组件之间的对应关系。一个 web 网站只有一个唯一的 HTML 页面，不同组件的切换要依赖于前端路由来完成。</p>
+<ol>
+<li>路由链接比普通的锚点链接快很多，因为它只是改变组件而不是向服务器发送新请求且会拦截这些请求。</li>
+<li>可快捷地改变点中的导航栏中路由条目的样式。</li>
+<li>可将数据与根目录下的 &lt;router-link&gt; 标签绑定，在 to 属性前加：且不直接硬编码它的路径，而是输入一个代表这条路径的对象，给出 name 和对应的值如：{name:’About’}</li>
+</ol>
+<p>folder structure</p>
+<ol>
+<li>路径 path 里参数用冒号隔开 如 &#x2F;jobs&#x2F;:id .在 url 中遵循此命名规则的可以直接刷新到对应窗口。</li>
+<li>输出动态值可以使用$，route信息里包括当前路线的任何信息如路线参数。如：当path里的参数变成id时，用$route.params.id 可以实时获取 id 名字<br>可以在 data 里给变量赋值为对应的 route 参数，输出时可以直接引用<br>制作可以传递路由参数的动态路由链接：<br>&lt;router-link&gt;中用:to&#x3D;{}绑定 name 和 params 属性，可以用 params 属性将参数传递到 url，params 里面的值是一个对象，该对象中每个键都是一个 route 参数， 对象里的属性可以是 id 并给它赋值。<br>可以任意路由参数链接到组件的 props 上，比如在其他文件里定义的 id 值可以在文件里用 props 接收，此时组件里就不需要在 data 里返回对应的 id 等参数了<br>使用方法：在 index.js 里将对应组件路由设置 props:true，在对应组件里引入 props:[‘id’]</li>
+</ol>
+<p>redirects&amp;404’s<br>redirects:在 index.js 中设置，让路由中旧地址也跳转到新地址{path:’旧地址’,redirect:’新地址’}<br>为任意不存在的路由设置一个 catch-all 路由-显示 404 页面：1.在 views 下创建一个 vue 页面 2.在 index.js 下创建对象，path 属性的值是‘&#x2F;：catchAll(.*)’ 2.在对象里为 name 和 component 赋值，component 的值是刚刚创建的页面 3.在页面上端 import xxx(name) from xxxx</p>
+<p>Programmatic Navigation<br>在 methods 中获取$router（勿混淆：router 用来移动它们，route 用来获取当前路由里的信息），有 go()方法，若用 go(-1)意味着倒退一个页面，go(1)则是前进一个页面。<br>若在 methods用 redirect 方法，前面依旧需要加this.$router.用 push()表示推进一个页面，()里面输入和 router-link 标签里要输入的{}path&#x2F;name 一样的对象，如 name:”about”</p>
+<h3 id="fetching-data"><a href="#fetching-data" class="headerlink" title="fetching data"></a>fetching data</h3><ol>
+<li><p>从 vue 组件内部获取外部数据，用 json server 的包模拟向其发出请求的 api<br>用法： 1. 建一个 data 文件夹，在里面生成一个 xxx.json 文件，文件像一个对象那样以花括号开头，里面存放的键需要用双引号引起来。若对象里的值是<em>字符串</em>，必须用双引号引起来（单引号’’的话则不算数）2. 在此项目的本地服务器安装 json server 包：npm install （-g） json-server 3. 用其读取文件：json-server –watch 文件夹名&#x2F;文件名</p>
+</li>
+<li><p>在 mounted hook 里用 fetch（）请求 1.异步 回调函数 将获取的响应作为参数。res.json 是使用 fetch api 的方式 ，这个同样是异步函数，返回一个 promise</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&quot;http://localhost:3000/jobs&quot;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> (<span class="variable language_">this</span>.<span class="property">jobs</span> = data))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>));</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="the-composition"><a href="#the-composition" class="headerlink" title="the composition"></a>the composition</h3><ul>
+<li>composition API 1.可以在 setup 函数里将逻辑都整合在一起 2.便于创建可复用的逻辑功能<br>如在 setup(){}中，可以定义数据、方法，不需要再用 data 和 methods 操作。<br>$refs 不能在 setup 中使用，因为此时该组件还没被创建出来</li>
+<li>refs:<br>使用时必须添加语句：import {ref} from ‘vue’<br>用法：<ol>
+<li>引用模版中的值：在 setup 中使用时，需要把它赋值给变量，且在一开始没运行到 return 的时候，ref 依旧等于默认值而不是绑定的元素的值。有一些 ref 可以用的功能如变量名为 p 时，有 p.value.classList.add(),p.value.textContent&#x3D;’’等</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p ref=&quot;p&quot;&gt;&lt;/p&gt;</span><br><span class="line">...</span><br><span class="line">const p=ref(null)</span><br><span class="line">....</span><br><span class="line">return &#123;p,...&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>using refs for reactivity 创建反应变量<br>在默认情况下，composition API 中定义的变量不是反应变量，当更改里面的数值时，模版中的值不会自动更新（与 data 相反）。因此需要在 setup 函数中创建反应变量。方法：1. 用 refs 创建反应变量：让变量&#x3D;的右边用 ref()环绕。return 变量且在模版中直接引用。setup 函数中得到它的值的语法是：name.value</p>
+<p>ref 的值可以是对象，数组，等等。当 ref 值是对象时，调用时需要用 xxx.xx 的格式调用某具体属性，在方法中使用或重新赋值时要用 xxx.value.xx 的格式。</p>
+<p>@click&#x3D;’’里面不一定要加方法名，还可以加 js 语言比如 xx++</p>
+</li>
+</ol>
+<ul>
+<li><p>reactive<br>reactive 和 ref 最主要的区别：ref 必须用 value 属性去使用里面的值而 reactive 不需要用 value 属性。<br>缺点：1. 不能使用原始值，如赋以一个变量 reactive 值时，不能是 string 这种 primitive type 原始类型，否则它不能成为反应变量。<br>2.ref 在创建外部组件函数时能更好地工作，因为它们暴露在外部函数时也能保留反应性<br>所以通常还是使用 refs</p>
+</li>
+<li><p>using computed values<br>使用的时候和 ref 一样需要 import 导入<br>给变量赋于 computed 值时，xxx&#x3D;computed(()&#x3D;&gt;{return …}) xxx 等于{}里面 return 的值，且需要最后在 return 中返回 xxx，调用时直接在 template 中调用 xxx 即可。<br>除了简单返回一个值，computed 经常是根据其他使用过的值来返回一个过滤过的新值。<br>filter() 方法可以对数组进行过滤，创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。xxx&#x3D; xx.filter((item)&#x3D;&gt;{…..})<br><em>它的特点和以前一样可以定义依赖于其他数据属性的数据，随着其他数据一起更新</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> matchingNames = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> names.<span class="property">value</span>.<span class="title function_">filter</span>(<span class="function">(<span class="params">name</span>) =&gt;</span> name.<span class="title function_">includes</span>(search.<span class="property">value</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>watch&amp;watchEffect</p>
+<ol>
+<li>使用前需要 import 导入</li>
+<li>watch()的第一个参数是输入需要观察的变量，第二个是函数定义的方法，每次第一个变量值改变时都会触发</li>
+<li>watchEffect(()&#x3D;&gt;{})在组件第一次加载的时候会运行一次，当{}里输入变量的 value 时，它会在变量变化时运行且显示出变量的值</li>
+<li>如何阻止监视：直接将该方法存储在变量 xxx 中，阻止的时候调用。在阻止的方法里面写上 xxx()</li>
+</ol>
+</li>
+<li><p>在 composition API 中使用 props:<br>按照上面的写法创建变量的前提下，创建一个标签，标签名和要导入的子组件名相等，在该标签里：绑定变量名和值 xxx&#x3D;”xxx”。import 导入组件名和详细路径，在 export default 的 components:{}中也要加上组件名。<br>接收 props 的组件中用法不变，直接在组件内部用 props:[‘xxx’]。接收的界面里若要在 setup(){}中使用 props，需要在括号里加上 props 参数，然后在里面使用 props.xxx。</p>
+</li>
+<li><p>lifecycle hooks<br>在 component API 如 setup(){}里用 hooks 时需要 import，此外写法开头需要加 on,如 onMount</p>
+</li>
+<li><p>fetching data in setup</p>
+<ul>
+<li>异步的概念<img src="/2023/01/05/vue/async.png"></li>
+</ul>
+</li>
+<li><p>Vue 中使用${}实现变量和字符串的拼接，如：<br>alert(<code>Hello $&#123;this.name&#125;!</code>)</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/likeclouds">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-js-basics-part1"><span class="toc-number">1.</span> <span class="toc-text">Vue.js basics(part1)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-js-basics-part2"><span class="toc-number">2.</span> <span class="toc-text">Vue.js basics(part2)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-CLI-and-bigger-projects"><span class="toc-number">3.</span> <span class="toc-text">Vue CLI and bigger projects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#buid-a-reaction-timer-game"><span class="toc-number">4.</span> <span class="toc-text">buid a reaction timer game</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forms-amp-inputs"><span class="toc-number">5.</span> <span class="toc-text">forms&amp;inputs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#the-vue-router"><span class="toc-number">6.</span> <span class="toc-text">the vue router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fetching-data"><span class="toc-number">7.</span> <span class="toc-text">fetching data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#the-composition"><span class="toc-number">8.</span> <span class="toc-text">the composition</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/05/vue/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/05/vue/&text=Vue3学习笔记（ninja)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/05/vue/&is_video=false&description=Vue3学习笔记（ninja)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Vue3学习笔记（ninja)&body=Check out this article: http://example.com/2023/01/05/vue/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/05/vue/&title=Vue3学习笔记（ninja)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/05/vue/&name=Vue3学习笔记（ninja)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/05/vue/&t=Vue3学习笔记（ninja)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;   2022-2023 Lizzy
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+      -->
+        <li>
+          <a href="/"
+            >首页</a
+          >
+        </li>
+        <!--
+    --><!--
+      -->
+        <li>
+          <a href="/about/"
+            >关于</a
+          >
+        </li>
+        <!--
+    --><!--
+      -->
+        <li>
+          <a href="/categories/"
+            >分类</a
+          >
+        </li>
+        <!--
+    --><!--
+      -->
+        <li>
+          <a href="/archives/"
+            >归档</a
+          >
+        </li>
+        <!--
+    --><!--
+      -->
+        <li>
+          <a target="_blank" rel="noopener" href="https://github.com/likeclouds"
+            >项目</a
+          >
+        </li>
+        <!--
+    --><!--
+      -->
+        <li>
+          <a href="/search/"
+            >搜索</a
+          >
+        </li>
+        <!--
+    -->
+      </ul>
+      <ul>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'lizzy';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
